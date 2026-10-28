@@ -1,0 +1,183 @@
+/* ====== General ====== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* ====== Encabezado ====== */
+header {
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* ====== Navegación ====== */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.navbar .nav-link {
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #ffc107;
+}
+
+/* ====== Carrusel ====== */
+#carouselPerfumes .carousel-item img {
+  height: 50vh;        /* Mitad de la altura de la pantalla */
+  object-fit: cover;   /* Recorta sin deformar */
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators li {
+  background-color: #007bff;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+}
+
+/* ====== Sección de Productos ====== */
+.producto {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.producto img {
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.producto h5 {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.producto p {
+  color: #007bff;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+
+/* ====== Tabla del carrito ====== */
+.table {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* ====== Total del carrito ====== */
+#totalCarrito {
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* ====== Pie de página ====== */
+footer {
+  background: #343a40;
+  color: #fff;
+  margin-top: 40px;
+}
+
+footer a {
+  color: #ffc107;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+/* ====== EFECTO VISUAL TARJETAS DE PRODUCTOS ====== */
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+/* ====== EFECTO VISUAL PRODUCTOS EN INICIO ====== */
+
+.productos {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.productos:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.productos img {
+  transition: transform 0.3s ease;
+}
+
+.productos:hover img {
+  transform: scale(1.05);
+}
+#buscador {
+  border-radius: 30px;
+  padding: 12px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#ordenarPrecio {
+  border-radius: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}

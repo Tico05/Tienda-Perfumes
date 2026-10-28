@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Facturación</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Encabezado -->
+  <header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="m-0">Facturación</h1>
+      <span id="usuarioBadge" class="badge badge-light" style="font-size:0.9rem;"></span>
+    </div>
+  </header>
+
+  <!-- Menú de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Inicio</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="productos.html">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" href="carrito.html">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="facturacion.html">Facturación</a></li>
+          <li class="nav-item"><a class="nav-link" href="usuario.html">Añadir Usuario</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container my-5">
+    <h2 class="mb-4">Resumen de tu compra</h2>
+
+    <!-- Tabla resumen del carrito -->
+    <table class="table table-striped" id="tablaFacturacion">
+      <thead class="thead-dark">
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Se llenará con JS -->
+      </tbody>
+    </table>
+
+    <div class="text-right mb-5">
+      <h4>Total: <span id="totalFacturacion">Bs 0</span></h4>
+      <h5 id="descuentoInfo" class="text-success"></h5>
+    </div>
+
+    <!-- Formulario de facturación -->
+    <h2 class="mb-4">Datos de Facturación</h2>
+    <form id="formFacturacion">
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" class="form-control" id="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" class="form-control" id="correo" required>
+      </div>
+      <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input type="text" class="form-control" id="direccion" required>
+      </div>
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" class="form-control" id="telefono" required>
+      </div>
+      <div class="form-group">
+        <label for="pago">Método de pago</label>
+        <select class="form-control" id="pago" required>
+          <option value="">Seleccione...</option>
+          <option value="tarjeta">Tarjeta de crédito/débito</option>
+          <option value="paypal">PayPal</option>
+          <option value="transferencia">Transferencia bancaria</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success">Finalizar Compra</button>
+    </form>
+
+    <!-- Frame solicitado (Ubicación UPDS La Paz con marcador) -->
+    <h2 class="mt-5 mb-3">Ubicación de la Tienda - Sede La Paz</h2>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3820.123456789!2d-68.119!3d-16.500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915f0f123456789%3A0xabcdef123456789!2sUniversidad%20Privada%20Domingo%20Savio%20-%20UPDS%20La%20Paz!5e0!3m2!1ses!2sbo!4v1700000000000!5m2!1ses!2sbo" 
+      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container text-center">
+      <p>&copy; 2026 Tienda de Perfumes Bath & Body - Albrook Mall. Todos los derechos reservados.</p>
+      <p>Síguenos en:
+        <a href="#" class="text-white">Facebook</a> |
+        <a href="#" class="text-white">Instagram</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="sesion.js"></script>
+
+  <!-- Script único de facturación con descuento -->
+  <script>
+    const usuario = JSON.parse(localStorage.getItem("usuario")) || null;
+
+    function getCarritoKey() {
+      if (usuario && usuario.correo) return `carrito_${usuario.correo}`;
+      if (usuario && usuario.nombre) return `carrito_${usuario.nombre}`;
+      return "carrito";
+    }
+    function getCarrito() {
+      return JSON.parse(localStorage.getItem(getCarritoKey())) || [];
+    }
+
+    const carrito = getCarrito();
+    const tbody = document.querySelector("#tablaFacturacion tbody");
+    const totalSpan = document.getElementById("totalFacturacion");
+    const descuentoInfo = document.getElementById("descuentoInfo");
+
+    let total = 0;
+
+    if (!carrito.length) {
+      const filaVacia = document.createElement("tr");
+      filaVacia.innerHTML = `<td colspan="4" class="text-center text-muted">Tu carrito está vacío 🛒</td>`;
+      tbody.appendChild(filaVacia);
+    } else {
+      carrito.forEach(producto => {
+        const cantidad = producto.cantidad ? Number(producto.cantidad) : 1;
+        const subtotal = Number(producto.precio) * cantidad;
+
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+          <td>${producto.nombre}</td>
+          <td>Bs ${producto.precio}</td>
+          <td>${cantidad}</td>
+          <td>Bs ${subtotal.toFixed(2)}</td>
+        `;
+        tbody.appendChild(fila);
+        total += subtotal;
+      });
+    }
+
+    // 🔥 Lógica de descuento desde Bs 100
+    let descuento = 0;
+    if (total >= 100) {
+      descuento = total * 0.10; // 10% de descuento
+      descuentoInfo.textContent = `🔥 Descuento aplicado: Bs ${descuento.toFixed(2)} (10% OFF desde Bs.100)`;
+      alert("🔥 Oferta especial: 10% de descuento aplicado por compras mayores a Bs.100");
+    }
+    const totalFinal = total - descuento;
+
+    // Mostrar total con descuento
+    totalSpan.textContent = `Bs ${totalFinal.toFixed(2)}`;
+
+    // Prellenar datos del usuario en el formulario
+    if (usuario) {
+      if (usuario.nombre) document.getElementById("nombre").value = usuario.nombre;
+      if (usuario.correo) document.getElementById("correo").value = usuario.correo;
+    }
+
+        // Finalizar compra
+    document.getElementById("formFacturacion").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert(`✅ Compra finalizada con éxito.\nTotal: Bs ${total.toFixed(2)}\nDescuento: $${descuento.toFixed(2)}\nTotal a pagar: Bs ${totalFinal.toFixed(2)}\nGracias por tu compra, ${document.getElementById("nombre").value}!`);
+      
+      // Limpiar carrito del usuario
+      localStorage.removeItem(getCarritoKey());
+      
+      // Redirigir al inicio
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
